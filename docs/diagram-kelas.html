@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diagram Kelas — Tugas 2 PBO</title>
+<style>
+  body { font-family: -apple-system, "Segoe UI", Roboto, sans-serif; color: #1e293b;
+         background: #f8fafc; margin: 0; padding: 32px 20px; line-height: 1.6; }
+  main { max-width: 760px; margin: 0 auto; }
+  h1 { font-size: 24px; margin: 0 0 4px; }
+  p.lead { color: #64748b; margin: 0 0 28px; }
+  h2 { font-size: 18px; margin: 32px 0 4px; }
+  p.note { color: #475569; font-size: 14px; margin: 0 0 12px; }
+  .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px;
+          padding: 20px; margin: 12px 0 8px; }
+  svg { display: block; max-width: 100%; height: auto; }
+  .cls { fill: #fff; stroke: #2563eb; stroke-width: 1.5; rx: 8; }
+  .cls-abs { fill: #eff6ff; stroke: #2563eb; stroke-width: 1.5; rx: 8; }
+  .cls-warn { fill: #fff7ed; stroke: #ea580c; stroke-width: 1.5; rx: 8; }
+  .name { font-size: 14px; font-weight: 700; fill: #1e293b; }
+  .mem { font-size: 11px; fill: #64748b; }
+  .lbl { font-size: 11px; fill: #64748b; }
+  .warn { font-size: 11px; fill: #c2410c; }
+  .cap { font-size: 12px; fill: #64748b; }
+  a { color: #2563eb; }
+  footer { color: #94a3b8; font-size: 13px; margin-top: 32px; }
+</style>
+</head>
+<body>
+<main>
+<h1>Diagram Kelas — Tugas 2 PBO</h1>
+<p class="lead">Inheritance, composition, dan polimorfisme di tiap soal. Panah
+segitiga kosong = <i>extends</i> (is-a); garis putus-putus dengan belah ketupat
+= komposisi (has-a). Detail konsep ada di
+<a href="konsep-per-soal.md">konsep-per-soal.md</a>.</p>
+
+<h2>Soal 1 — Perangkat</h2>
+<p class="note">Hierarki inheritance. <code>infoSingkat()</code> di-override di
+tiap subclass; <code>LaptopGaming</code> menambah garansi 6 bulan lewat konstruktor.</p>
+<div class="card">
+<svg viewBox="0 0 520 260" role="img" aria-label="Diagram kelas soal 1">
+  <defs>
+    <marker id="tri" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#fff" stroke="#2563eb" stroke-width="1.2"/>
+    </marker>
+  </defs>
+  <rect class="cls" x="180" y="15" width="160" height="44"/>
+  <text class="name" x="260" y="33" text-anchor="middle">Perangkat</text>
+  <text class="mem" x="260" y="50" text-anchor="middle">infoSingkat() · hitungPajak()</text>
+
+  <rect class="cls" x="40" y="115" width="160" height="44"/>
+  <text class="name" x="120" y="133" text-anchor="middle">Laptop</text>
+  <text class="mem" x="120" y="150" text-anchor="middle">hitungHargaPromo()</text>
+
+  <rect class="cls" x="320" y="115" width="160" height="44"/>
+  <text class="name" x="400" y="133" text-anchor="middle">Ponsel</text>
+  <text class="mem" x="400" y="150" text-anchor="middle">kapasitas · kamera</text>
+
+  <rect class="cls" x="40" y="215" width="160" height="44"/>
+  <text class="name" x="120" y="233" text-anchor="middle">LaptopGaming</text>
+  <text class="mem" x="120" y="250" text-anchor="middle">GPU · garansi +6 bln</text>
+
+  <line x1="230" y1="59" x2="135" y2="115" stroke="#2563eb" stroke-width="1.5" marker-end="url(#tri)"/>
+  <line x1="290" y1="59" x2="385" y2="115" stroke="#2563eb" stroke-width="1.5" marker-end="url(#tri)"/>
+  <line x1="120" y1="159" x2="120" y2="215" stroke="#2563eb" stroke-width="1.5" marker-end="url(#tri)"/>
+  <text class="lbl" x="168" y="82">extends</text>
+  <text class="lbl" x="330" y="82">extends</text>
+  <text class="lbl" x="130" y="192">extends</text>
+</svg>
+</div>
+
+<h2>Soal 2 — Hewan, A/B, Lingkaran</h2>
+<p class="note">Tiga rantai kecil. Bagian A: dynamic dispatch
+(<code>makan()</code> memanggil <code>suara()</code> versi Kucing).
+Bagian B: konstruktor A memanggil <code>init()</code> yang di-override B.
+Bagian C: <code>Titik extends Lingkaran</code> — contoh relasi is-a yang salah.</p>
+<div class="card">
+<svg viewBox="0 0 640 180" role="img" aria-label="Diagram kelas soal 2">
+  <defs>
+    <marker id="tri2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#fff" stroke="#2563eb" stroke-width="1.2"/>
+    </marker>
+  </defs>
+  <rect class="cls" x="20" y="15" width="140" height="40"/>
+  <text class="name" x="90" y="31" text-anchor="middle">Hewan</text>
+  <text class="mem" x="90" y="47" text-anchor="middle">makan() · suara()</text>
+  <rect class="cls" x="20" y="115" width="140" height="40"/>
+  <text class="name" x="90" y="131" text-anchor="middle">Kucing</text>
+  <text class="mem" x="90" y="147" text-anchor="middle">suara() · panjat()</text>
+  <line x1="90" y1="55" x2="90" y2="115" stroke="#2563eb" stroke-width="1.5" marker-end="url(#tri2)"/>
+  <text class="lbl" x="100" y="90">extends</text>
+
+  <rect class="cls" x="250" y="15" width="140" height="40"/>
+  <text class="name" x="320" y="31" text-anchor="middle">A</text>
+  <text class="mem" x="320" y="47" text-anchor="middle">init()</text>
+  <rect class="cls" x="250" y="115" width="140" height="40"/>
+  <text class="name" x="320" y="131" text-anchor="middle">B</text>
+  <text class="mem" x="320" y="147" text-anchor="middle">nilai = 5 · init()</text>
+  <line x1="320" y1="55" x2="320" y2="115" stroke="#2563eb" stroke-width="1.5" marker-end="url(#tri2)"/>
+  <text class="lbl" x="330" y="90">extends</text>
+
+  <rect class="cls" x="480" y="15" width="140" height="40"/>
+  <text class="name" x="550" y="31" text-anchor="middle">Lingkaran</text>
+  <text class="mem" x="550" y="47" text-anchor="middle">luas() · keliling()</text>
+  <rect class="cls-warn" x="480" y="115" width="140" height="40"/>
+  <text class="name" x="550" y="131" text-anchor="middle">Titik</text>
+  <text class="mem" x="550" y="147" text-anchor="middle">luas() = 0.0</text>
+  <line x1="550" y1="55" x2="550" y2="115" stroke="#ea580c" stroke-width="1.5" marker-end="url(#tri2)"/>
+  <text class="warn" x="480" y="172">melanggar LSP — titik bukan lingkaran</text>
+</svg>
+</div>
+
+<h2>Soal 3 — Garis dan Titik</h2>
+<p class="note">Komposisi, bukan inheritance: Garis <i>punya</i> dua Titik.
+Konstruktor, getter, dan setter menyalin Titik (salinan defensif) supaya tidak
+ada aliasing dari luar.</p>
+<div class="card">
+<svg viewBox="0 0 560 130" role="img" aria-label="Diagram kelas soal 3">
+  <rect class="cls" x="20" y="45" width="160" height="44"/>
+  <text class="name" x="100" y="63" text-anchor="middle">Garis</text>
+  <text class="mem" x="100" y="80" text-anchor="middle">getPanjang()</text>
+  <rect class="cls" x="380" y="45" width="160" height="44"/>
+  <text class="name" x="460" y="63" text-anchor="middle">Titik</text>
+  <text class="mem" x="460" y="80" text-anchor="middle">x · y · jarakKe()</text>
+  <line x1="190" y1="67" x2="380" y2="67" stroke="#2563eb" stroke-width="1.5"/>
+  <polygon points="180,67 192,59 204,67 192,75" fill="#2563eb"/>
+  <text class="lbl" x="280" y="55" text-anchor="middle">punya 2 Titik (komposisi)</text>
+  <text class="cap" x="280" y="118" text-anchor="middle">konstruktor / getter / setter menyalin Titik — anti-aliasing</text>
+</svg>
+</div>
+
+<h2>Soal 4 — Produk dan Keranjang</h2>
+<p class="note"><code>Produk</code> abstract; harga akhir dan deskripsi
+ditentukan polimorfisme. <code>Keranjang</code> menyimpan daftar
+<code>Produk</code> apa saja (komposisi).</p>
+<div class="card">
+<svg viewBox="0 0 660 270" role="img" aria-label="Diagram kelas soal 4">
+  <defs>
+    <marker id="tri4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#fff" stroke="#2563eb" stroke-width="1.2"/>
+    </marker>
+  </defs>
+  <rect class="cls-abs" x="120" y="15" width="180" height="44"/>
+  <text class="name" x="210" y="33" text-anchor="middle">Produk (abstract)</text>
+  <text class="mem" x="210" y="50" text-anchor="middle">hitungHargaAkhir() · deskripsi()</text>
+
+  <rect class="cls" x="20" y="115" width="180" height="44"/>
+  <text class="name" x="110" y="133" text-anchor="middle">ProdukFisik</text>
+  <text class="mem" x="110" y="150" text-anchor="middle">+ ongkir / kg</text>
+
+  <rect class="cls" x="240" y="115" width="180" height="44"/>
+  <text class="name" x="330" y="133" text-anchor="middle">ProdukDigital</text>
+  <text class="mem" x="330" y="150" text-anchor="middle">− diskon 10%</text>
+
+  <rect class="cls" x="240" y="215" width="180" height="44"/>
+  <text class="name" x="330" y="233" text-anchor="middle">Langganan</text>
+  <text class="mem" x="330" y="250" text-anchor="middle">harga/bln · diskon 20% (≥12 bln)</text>
+
+  <rect class="cls" x="470" y="115" width="170" height="44"/>
+  <text class="name" x="555" y="133" text-anchor="middle">Keranjang</text>
+  <text class="mem" x="555" y="150" text-anchor="middle">cetakStruk() · hitungTotal()</text>
+
+  <line x1="180" y1="59" x2="125" y2="115" stroke="#2563eb" stroke-width="1.5" marker-end="url(#tri4)"/>
+  <line x1="240" y1="59" x2="315" y2="115" stroke="#2563eb" stroke-width="1.5" marker-end="url(#tri4)"/>
+  <line x1="330" y1="159" x2="330" y2="215" stroke="#2563eb" stroke-width="1.5" marker-end="url(#tri4)"/>
+  <text class="lbl" x="128" y="82">extends</text>
+  <text class="lbl" x="268" y="82">extends</text>
+  <text class="lbl" x="340" y="192">extends</text>
+  <line x1="470" y1="122" x2="305" y2="48" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text class="lbl" x="415" y="72" text-anchor="middle">has-a: List&lt;Produk&gt;</text>
+</svg>
+</div>
+
+<footer>Diagram statis (SVG) — bukan Mermaid. Dibuat sebagai dokumentasi tugas kuliah, bukan produk.</footer>
+</main>
+</body>
+</html>
