@@ -1,0 +1,92 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Compile semua file Java
+        run: |
+          set -euo pipefail
+          find src -name "*.java" > sources.txt
+          javac -d out @sources.txt
+          test "$(find out -name '*.class' | wc -l)" -eq 24
+
+      - name: Jalankan semua kelas TesSoal
+        run: |
+          set -euo pipefail
+
+          # Jalankan satu kelas Tes, lalu pastikan outputnya memuat baris yang diharapkan.
+          run_ok() {
+            local class="$1"
+            shift
+            local output
+            output="$(java -cp out "$class")"
+            echo "--- $class ---"
+            echo "$output"
+            for expect in "$@"; do
+              echo "$output" | grep -F -q "$expect" || {
+                echo "FAIL: output $class tidak memuat: $expect" >&2
+                exit 1
+              }
+            done
+          }
+
+          run_ok soal1.TesSoal1 \
+            "Asus | garansi 24 bulan | RAM 16 GB | layar 14.0 inci" \
+            "Pajak laptop: Rp800000" \
+            "Promo laptop 10 persen: Rp7200000"
+
+          run_ok soal2.TesSoal2Perbaikan \
+            "h2 bukan Kucing, jadi tidak bisa dipanjat"
+
+          run_ok soal2.TesSoal2B \
+            "A dibuat" \
+            "init B, nilai=0" \
+            "B dibuat, nilai=5"
+
+          run_ok soal2.TesSoal2C \
+            "78.53981633974483" \
+            "0.0"
+
+          run_ok soal3.TesSoal3 \
+            "(0.0, 0.0) - (3.0, 4.0) panjang=5.0" \
+            "(1.0, 1.0) - (5.0, 5.0)"
+
+          run_ok soal4.TesSoal4 \
+            "F01 | Keyboard Mekanik | fisik 1.5 kg | Rp515000" \
+            "TOTAL: Rp2045000" \
+            "Fisik: 1, Digital: 1, Langganan: 1" \
+            "Gagal: Kode produk F01 sudah ada di keranjang"
+
+          # TesSoal2 SENGAJA gagal di tengah: ClassCastException adalah
+          # perilaku yang diminta soal (downcast Hewan biasa ke Kucing).
+          # Jadi yang di-assert di sini: exit code BUKAN 0 DAN output
+          # memuat ClassCastException.
+          echo "--- soal2.TesSoal2 (diharapkan gagal dengan ClassCastException) ---"
+          set +e
+          output="$(java -cp out soal2.TesSoal2 2>&1)"
+          code=$?
+          set -e
+          echo "$output"
+          if [ "$code" -eq 0 ]; then
+            echo "FAIL: TesSoal2 seharusnya gagal dengan ClassCastException" >&2
+            exit 1
+          fi
+          echo "$output" | grep -F -q "ClassCastException" || {
+            echo "FAIL: output TesSoal2 tidak memuat ClassCastException" >&2
+            exit 1
+          }

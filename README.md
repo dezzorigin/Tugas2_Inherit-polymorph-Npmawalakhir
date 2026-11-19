@@ -1,5 +1,15 @@
 # Tugas 2 Praktikum PBO — Inheritance, Composition, dan Polimorfisme
 
+[![CI](https://github.com/dezzorigin/Tugas2_Inherit-polymorph-Npmawalakhir/actions/workflows/ci.yml/badge.svg)](https://github.com/dezzorigin/Tugas2_Inherit-polymorph-Npmawalakhir/actions/workflows/ci.yml)
+
+> **Tugas kuliah, bukan produk.** Repo ini berisi jawaban Tugas 2 Praktikum PBO
+> (Java: inheritance, composition, polimorfisme). Tidak ada aplikasi web di
+> sini, jadi **tidak ada deploy** (Cloudflare Pages atau lainnya) dan tidak ada
+> landing/demo. Yang dijamin repo ini: semua kode ter-compile dan semua program
+> uji jalan — dibuktikan CI (GitHub Actions, JDK 21) di setiap push/PR.
+> Lisensi: MIT. Konsep per soal: [`docs/konsep-per-soal.md`](docs/konsep-per-soal.md);
+> diagram kelas: [`docs/diagram-kelas.html`](docs/diagram-kelas.html).
+
 Tugas 2, kelas A. Empat soal, masing-masing di package sendiri (soal1 sampai soal4). README ini berisi cara jalan, jawaban soal-soal analisis, dan analisis konsep. Semua output di bawah ini sudah benar-benar dijalankan, bukan karangan.
 
 ## Cara menjalankan
@@ -141,3 +151,15 @@ Tarif dan batasnya disimpan sebagai konstanta: ongkir Rp10.000 per kg, diskon di
 1. Overriding dan overloading itu beda tempat mainnya. Overriding terjadi waktu subclass menulis ulang method parent dengan nama dan parameter yang sama, contohnya `infoSingkat()` di Laptop dan `deskripsi()` di tiap jenis produk; method mana yang jalan diputuskan saat runtime berdasarkan objek aslinya, dan di sinilah polimorfisme bekerja. Overloading terjadi waktu satu kelas punya beberapa method dengan nama sama tapi parameter beda, contohnya dua konstruktor Garis; yang dipilih diputuskan saat compile berdasarkan argumennya. Jadi overriding butuh inheritance dan menggerakkan polimorfisme, sedangkan overloading cuma soal kemudahan pemakaian dan tidak butuh inheritance sama sekali.
 2. Inheritance dipilih kalau hubungannya memang is-a dan subclass benar-benar butuh perilaku parent, contohnya Laptop adalah Perangkat dan Langganan adalah ProdukDigital. Komposisi dipilih kalau hubungannya has-a, alias satu objek memakai kemampuan objek lain tanpa menjadi jenisnya, contohnya Garis punya dua Titik dan Keranjang punya daftar Produk. Patokan praktisnya gampang: kalau kalimatnya "adalah" dan substitusinya masuk akal, pakai inheritance; kalau kalimatnya "punya" atau perilakunya cuma dipakai, pakai komposisi. Salah pilih di sini biayanya mahal, karena hierarki yang salah susah dibongkar belakangan.
 3. `cetakStruk` tidak butuh instanceof karena dia cuma memanggil method yang sudah di-override, yaitu `deskripsi()` dan `hitungHargaAkhir()`, dan Java sendiri yang memilih versi yang tepat lewat tipe dinamis tiap produk. `hitungPerJenis` justru butuh instanceof karena dia perlu tahu jenis asli tiap produk untuk menghitung per kategori, dan informasi itu tidak tersedia lewat method umum Produk. Downcasting tidak selalu aman karena variabel bertipe parent bisa menunjuk objek apa saja dari turunannya; kalau tebakan jenisnya salah, JVM melempar ClassCastException saat runtime, makanya jenisnya dicek dulu dengan instanceof sebelum di-cast.
+
+## Catatan repo
+
+- **Bukan produk, tidak ada deploy.** Ini coursework yang sudah dikumpulkan;
+  kode tugas tidak diubah (hanya ditambah LICENSE, CI, dan docs). Tidak ada
+  situs/aplikasi web yang bisa di-deploy ke Pages.
+- **CI:** `.github/workflows/ci.yml` — compile semua 24 file Java dengan
+  `javac` (JDK 21) lalu menjalankan ketujuh kelas `TesSoal*` dan memeriksa
+  outputnya. `TesSoal2` sengaja gagal di tengah dengan `ClassCastException`
+  (perilaku yang diminta soal), jadi CI meng-assert exit code bukan 0 dan
+  output memuat `ClassCastException` untuk kelas itu.
+- **Lisensi:** MIT — lihat [`LICENSE`](LICENSE).
